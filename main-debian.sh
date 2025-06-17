@@ -26,7 +26,7 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-pipewire.sh
 #./install-rarlab.sh
 ./install-reaper.sh 7.40
-./install-winehq-debian-downgrade.sh -i
+./install-winehq-debian.sh -i --downgrade
 ./install-yabridge.sh
 ./install-zotero.sh
 
