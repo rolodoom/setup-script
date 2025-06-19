@@ -21,17 +21,12 @@ readonly NVIM_DATA_DIRS=(
 )
 
 # --- External Functions ---
-source lib/notify_lib.sh 2>/dev/null || {
-    echo "Warning: Notification library not found. Using basic messages."
-    notify() { echo "==> $1"; }
-}
+source lib/notify_lib.sh
 
 # --- Functions ---
 
 show_help() {
     cat <<EOF
-NeoVim Manager (v0.2)
-
 USAGE:
   $0 [OPTION]
 
@@ -40,46 +35,36 @@ OPTIONS:
   -a    Install NeoVim + AstroVim configuration
   -u    Uninstall NeoVim completely
   -h    Show this help message
-
-EXAMPLES:
-  $0 -i    # Install only NeoVim
-  $0 -a    # Install with AstroVim
-  $0 -u    # Complete uninstall
 EOF
     exit 0
 }
 
-error_exit() {
-    echo "Error: $1" >&2
-    exit 1
-}
-
 install_nvim() {
-    notify "Starting NeoVim installation..."
+    notify "Starting NeoVim installation..." "heading"
     
     # Download release
     if ! wget "$NVIM_URL" -O "$NVIM_TAR_FILE"; then
-        error_exit "Failed to download NeoVim"
+        notify "Failed to download NeoVim" "error"
     fi
 
     # Extract archive
     if ! tar xzf "$NVIM_TAR_FILE"; then
-        error_exit "Failed to extract archive"
+        notify "Failed to extract archive" "error"
     fi
 
     # Install to system
-    sudo mv "$NVIM_DIR" "$NVIM_INSTALL_PATH" || error_exit "Installation failed"
-    sudo ln -sf "$NVIM_INSTALL_PATH/bin/nvim" "$NVIM_BIN_PATH" || error_exit "Could not create symlink"
+    sudo mv "$NVIM_DIR" "$NVIM_INSTALL_PATH" || notify "Installation failed" "error"
+    sudo ln -sf "$NVIM_INSTALL_PATH/bin/nvim" "$NVIM_BIN_PATH" || notify "Could not create symlink" "error"
 
     # Cleanup
     rm -f "$NVIM_TAR_FILE"
 
     # Verify
     if nvim --version &>/dev/null; then
-        notify "NeoVim installed successfully!"
+        notify "NeoVim installed successfully!" "success"
         return 0
     else
-        error_exit "NeoVim installation verification failed"
+        notify "NeoVim installation verification failed" "error"
     fi
 }
 
@@ -95,15 +80,15 @@ install_astrovim() {
     # Clone template
     if git clone --depth 1 "$ASTROVIM_REPO" "$NVIM_CONFIG_DIR"; then
         rm -rf "$NVIM_CONFIG_DIR/.git"
-        notify "AstroVim configured successfully!"
+        notify "AstroVim configured successfully!" "success"
         return 0
     else
-        error_exit "Failed to clone AstroVim template"
+        notify "Failed to clone AstroVim template" "error"
     fi
 }
 
 uninstall_nvim() {
-    notify "Starting complete uninstall..."
+    notify "Starting complete uninstall" "heading"
     
     # System files
     sudo rm -rf "$NVIM_INSTALL_PATH"
@@ -115,7 +100,7 @@ uninstall_nvim() {
         rm -rf "$dir"
     done
 
-    notify "NeoVim completely removed from system"
+    notify "NeoVim completely removed from system" "success"
 }
 
 # --- Main Program ---
