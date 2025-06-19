@@ -42,7 +42,7 @@ confirm_action() {
 }
 
 install_ms_studio() {
-  notify "Installing MuseScore Studio ${MSS_VERSION}"
+  notify "Installing MuseScore Studio ${MSS_VERSION}" "heading"
   
   if [[ -f "${MSS_FILENAME}" ]]; then
     echo "Found existing: ${MSS_FILENAME}"
@@ -52,6 +52,8 @@ install_ms_studio() {
   
   chmod +x "${MSS_FILENAME}"
   "./${MSS_FILENAME}" install || notify "Installation failed" "error"
+
+  notify "Installing MuseScore Studio ${MSS_VERSION} installed succesfully" "success"
 }
 
 install_ms_sounds() {
@@ -65,6 +67,8 @@ install_ms_sounds() {
   
   sudo apt install "./${MSM_FILENAME}" -y
   rm -f "${MSM_FILENAME}"
+
+  notify "Muse Sounds Manager installed succesfully" "success"
 }
 
 uninstall_ms_studio() {
@@ -93,14 +97,15 @@ uninstall_ms_studio() {
     [ -f "${mime_dir}/application-x-musescore4portable+xml.svg" ] && rm -f "${mime_dir}/application-x-musescore4portable+xml.svg"
   fi
   
-  echo "MuseScore Studio ${MSS_VERSION} completely removed"
+  notify "MuseScore Studio ${MSS_VERSION} completely removed" "success"
 }
 
 uninstall_ms_sounds() {
   confirm_action "This will uninstall Muse Sounds Manager." || return
   
-  notify "Uninstalling Muse Sounds" "heading"
+  notify "Uninstalling Muse Sounds"
   sudo apt purge -y muse-sounds-manager
+  notify "Muse Sounds removed" "success"
 }
 
 # --- Main Logic ---
