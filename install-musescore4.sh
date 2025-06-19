@@ -12,7 +12,7 @@ MSM_FILENAME="${MSM_URL##*/}"
 MSS_VERSION=$(echo "$MSS_FILENAME" | grep -oP 'MuseScore-Studio-\K\d+\.\d+\.\d+')
 
 # --- External Functions ---
-source lib/notify_lib.sh || { echo "Error: Failed to load notify_lib.sh"; exit 1; }
+source lib/notify_lib.sh
 
 # --- Functions ---
 
