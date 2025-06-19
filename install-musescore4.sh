@@ -19,7 +19,6 @@ source lib/notify_lib.sh || { echo "Error: Failed to load notify_lib.sh"; exit 1
 show_help() {
   cat <<EOF
 Usage: $0 [OPTIONS]
-Manage MuseScore components (version ${MSS_VERSION})
 
 Install Options:
   -m    Install MuseScore Studio
@@ -30,22 +29,9 @@ Uninstall Options:
   -M    Uninstall MuseScore Studio
   -S    Uninstall Muse Sounds Manager
   -A    Uninstall all components (both)
-
-Other Options:
   -h    Show this help message
-
-Examples:
-  Install both:    $0 -a
-  Install Studio:  $0 -m
-  Uninstall Sound: $0 -S
 EOF
   exit 0
-}
-
-error_exit() {
-  local message="$1"
-  echo "Error: ${message}" >&2
-  exit 1
 }
 
 confirm_action() {
@@ -61,11 +47,11 @@ install_ms_studio() {
   if [[ -f "${MSS_FILENAME}" ]]; then
     echo "Found existing: ${MSS_FILENAME}"
   else
-    wget "${MSS_URL}" || error_exit "Download failed"
+    wget "${MSS_URL}" || notify "Download failed" "error"
   fi
   
   chmod +x "${MSS_FILENAME}"
-  "./${MSS_FILENAME}" install || error_exit "Installation failed"
+  "./${MSS_FILENAME}" install || notify "Installation failed" "error"
 }
 
 install_ms_sounds() {
@@ -74,7 +60,7 @@ install_ms_sounds() {
   if [[ -f "${MSM_FILENAME}" ]]; then
     echo "Found existing: ${MSM_FILENAME}"
   else
-    wget -O "${MSM_FILENAME}" "${MSM_URL}" || error_exit "Download failed"
+    wget -O "${MSM_FILENAME}" "${MSM_URL}" || notify "Download failed" "error"
   fi
   
   sudo apt install "./${MSM_FILENAME}" -y
