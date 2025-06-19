@@ -64,6 +64,7 @@ notify() {
             ;;
         error)
             echo -e "\n\033[31m✗ ERROR: ${message//$'\n'/$'\n✗ ERROR: '}\033[0m\n" >&2
+            exit 1
             ;;
         *)
             echo "Unknown format: $format" >&2
