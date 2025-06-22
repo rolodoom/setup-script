@@ -47,7 +47,7 @@ fs.inotify.max_user_watches=600000' | sudo tee /etc/sysctl.d/99-custom.conf
 sudo sysctl --system
 
 notify "Installing Default Software..."
-sudo apt install -y calibre dolphin-plugins gimp gimp-plugin-registry hunspell-es inkscape keepassxc kwin-addons kio-extras papirus-icon-theme tidy thunderbird
+sudo apt install -y calibre dolphin-plugins gimp gimp-plugin-registry hunspell-es inkscape keepassxc kwin-addons kio-extras papirus-icon-theme polyphone tidy thunderbird
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
