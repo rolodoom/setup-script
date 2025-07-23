@@ -14,7 +14,21 @@ sudo apt update && sudo apt upgrade -y
 notify "Installing requirements..."
 sudo apt install -y wget curl htop btop git rsync zsh
 
-
+./install-asciiquarium.sh
+./install-brave.sh
+./install-docker-debian.sh
+./install-firefox.sh
+./install-flatpak.sh
+./install-joplin.sh -i
+./install-kxstudio.sh
+./install-liquorix.sh
+./install-neovim.sh -a
+./install-pipewire.sh
+./install-rarlab.sh -i
+./install-reaper.sh 7.41
+./install-winehq-debian.sh -i --downgrade
+./install-yabridge.sh
+./install-zotero.sh
 
 notify "Configure System for Audio Workstation"
 notify "grub ..."
