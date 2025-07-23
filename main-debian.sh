@@ -20,7 +20,6 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-firefox.sh
 ./install-flatpak.sh
 ./install-joplin.sh -i
-./install-kxstudio.sh
 ./install-liquorix.sh
 ./install-neovim.sh -a
 ./install-pipewire.sh
