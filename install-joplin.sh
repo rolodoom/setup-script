@@ -13,7 +13,7 @@ Usage: $0 [OPTIONS]
 
 Options:
   -i    Install Joplin
-  -u    Uninstall Muse Sounds Manager
+  -u    Uninstall Joplin
   -h    Show this help message
 EOF
   exit 0
