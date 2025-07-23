@@ -7,7 +7,7 @@ source lib/notify_lib.sh
 
 notify "Installing Zotero" "heading"
 
-VERSION=7.0.11
+VERSION=7.0.21
 
 INSTALLER="Zotero-${VERSION}_linux-x86_64.tar.bz2"
 notify "Downloading Zotero"
