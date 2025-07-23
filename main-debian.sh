@@ -50,7 +50,7 @@ sudo apt install -y calibre dolphin-plugins dolphin-nextcloud gimp hunspell-es i
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
-sudo apt install -y kxstudio-meta-audio-plugins-vst carla ardour audacity soundconverter dragonfly-reverb lsp-plugins calf-plugins caps dpf-plugins tap-plugins zam-plugins eq10q ebumeter x42-plugins
+sudo apt install -y ardour audacity soundconverter dragonfly-reverb lsp-plugins calf-plugins caps dpf-plugins tap-plugins zam-plugins eq10q ebumeter x42-plugins
 
 ./install-musescore4.sh -a
 
