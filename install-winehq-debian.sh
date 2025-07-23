@@ -82,7 +82,7 @@ add_repo() {
         sudo dpkg --add-architecture i386
         sudo mkdir -pm755 /etc/apt/keyrings
         wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key -
-        sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources
+        sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/trixie/winehq-trixie.sources
         sudo apt update
     else
         notify "WineHQ repository already exists, skipping addition"
@@ -90,7 +90,7 @@ add_repo() {
 }
 
 wine_repo_exists() {
-    [ -f /etc/apt/sources.list.d/winehq-bookworm.sources ] || \
+    [ -f /etc/apt/sources.list.d/winehq-trixie.sources ] || \
     grep -q '^deb.*winehq\.org' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null
 }
 
@@ -110,7 +110,7 @@ remove_software() {
 
 remove_repos() {
     notify "Removing WineHQ repositories"
-    sudo rm -rf /etc/apt/sources.list.d/winehq-bookworm.sources 2>/dev/null
+    sudo rm -rf /etc/apt/sources.list.d/winehq-trixie.sources 2>/dev/null
     sudo rm -rf /etc/apt/keyrings/winehq-archive.key 2>/dev/null
 }
 
@@ -228,7 +228,6 @@ case "$1" in
         show_help
         ;;
     *)
-        notify "Error: Invalid command" "error"
         show_help
         exit 1
         ;;

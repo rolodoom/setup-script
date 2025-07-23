@@ -8,27 +8,13 @@ source lib/notify_lib.sh
 notify "Main Debian Script" "heading"
 
 notify "Configure contrib..."
-sudo sed -i '/^deb /s/$/ contrib/' /etc/apt/sources.list
+sudo sed -i '/^deb /{/contrib/!s/$/ contrib/}' /etc/apt/sources.list
 sudo apt update && sudo apt upgrade -y
 
 notify "Installing requirements..."
 sudo apt install -y wget curl htop btop git rsync zsh
 
-./install-asciiquarium.sh
-./install-brave.sh
-./install-docker-debian.sh
-./install-firefox.sh
-./install-flatpak.sh
-./install-joplin.sh -i
-./install-kxstudio.sh
-./install-liquorix.sh
-./install-neovim.sh -a
-./install-pipewire.sh
-./install-rarlab.sh -i
-./install-reaper.sh 7.40
-./install-winehq-debian.sh -i --downgrade
-./install-yabridge.sh
-./install-zotero.sh
+
 
 notify "Configure System for Audio Workstation"
 notify "grub ..."
@@ -47,7 +33,7 @@ fs.inotify.max_user_watches=600000' | sudo tee /etc/sysctl.d/99-custom.conf
 sudo sysctl --system
 
 notify "Installing Default Software..."
-sudo apt install -y calibre dolphin-plugins gimp gimp-plugin-registry hunspell-es inkscape keepassxc kwin-addons kio-extras papirus-icon-theme polyphone tidy thunderbird
+sudo apt install -y calibre dolphin-plugins dolphin-nextcloud gimp hunspell-es inkscape kcolorchooser keepassxc kwin-addons kio-extras papirus-icon-theme polyphone tidy thunderbird
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
