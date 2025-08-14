@@ -8,6 +8,7 @@ DOWNGRADE_VERSION="9.0.0.0"
 DOWNGRADE_VERSION_SHORT="9.0"
 LATEST_VERSION_SHORT="10.0"
 SCRIPT_NAME=$(basename "$0")
+DEBIAN_CODENAME=$(grep -Po '(?<=VERSION_CODENAME=)\w+' /etc/os-release)
 
 # --- Function Definitions ---
 
@@ -59,9 +60,8 @@ clean_install_wine() {
 
 install_downgrade_version() {
     notify "Installing WineHQ stable $DOWNGRADE_VERSION" "heading"
-    codename=$(shopt -s nullglob; awk '/^deb https:\/\/dl\.winehq\.org/ { print $3; exit 0 } END { exit 1 }' /etc/apt/sources.list /etc/apt/sources.list.d/*.list || awk '/^Suites:/ { print $2; exit }' /etc/apt/sources.list /etc/apt/sources.list.d/wine*.sources)
     suffix=$(dpkg --compare-versions "$DOWNGRADE_VERSION" ge 6.1 && ((dpkg --compare-versions "$DOWNGRADE_VERSION" eq 6.17 && echo "-2") || echo "-1"))
-    sudo apt install --install-recommends -y {"winehq-stable","wine-stable","wine-stable-amd64","wine-stable-i386"}="$DOWNGRADE_VERSION~$codename$suffix"
+    sudo apt install --install-recommends -y {"winehq-stable","wine-stable","wine-stable-amd64","wine-stable-i386"}="$DOWNGRADE_VERSION~$DEBIAN_CODENAME$suffix"
     sudo apt-mark hold winehq-stable
 }
 
@@ -82,7 +82,7 @@ add_repo() {
         sudo dpkg --add-architecture i386
         sudo mkdir -pm755 /etc/apt/keyrings
         wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key -
-        sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/trixie/winehq-trixie.sources
+        sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/$DEBIAN_CODENAME/winehq-$DEBIAN_CODENAME.sources
         sudo apt update
     else
         notify "WineHQ repository already exists, skipping addition"
@@ -90,7 +90,7 @@ add_repo() {
 }
 
 wine_repo_exists() {
-    [ -f /etc/apt/sources.list.d/winehq-trixie.sources ] || \
+    [ -f /etc/apt/sources.list.d/winehq-$DEBIAN_CODENAME.sources ] || \
     grep -q '^deb.*winehq\.org' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null
 }
 
@@ -110,7 +110,7 @@ remove_software() {
 
 remove_repos() {
     notify "Removing WineHQ repositories"
-    sudo rm -rf /etc/apt/sources.list.d/winehq-trixie.sources 2>/dev/null
+    sudo rm -rf /etc/apt/sources.list.d/winehq-$DEBIAN_CODENAME.sources 2>/dev/null
     sudo rm -rf /etc/apt/keyrings/winehq-archive.key 2>/dev/null
 }
 
