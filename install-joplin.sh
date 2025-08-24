@@ -34,28 +34,43 @@ install(){
     notify "Joplin successfully installed!" "success"
 }
 
-uninstall(){
-    notify "uninstalling joplin" "heading"
-
-    confirm_action "This will uninstall Joplin." || return
-    
-    # List of files and directories to remove
+uninstall() {
+    # List of files and directories to check/remove
     local items_to_remove=(
-        ~/JoplinBacku
+        ~/JoplinBackup
         ~/.joplin
         ~/.config/joplin-desktop
         ~/.config/Joplin
         ~/.local/share/applications/appimagekit-joplin.desktop
+        ~/.local/bin/joplin
+        ~/.local/share/icons/hicolor/*/apps/joplin.png
     )
-    
-    # Remove each item silently (won't complain if missing)
+
+    local found=false
     for item in "${items_to_remove[@]}"; do
-        rm -rf "$item" 2>/dev/null
+        if [ -e $item ]; then
+            found=true
+            break
+        fi
     done
-    
+
+    if [ "$found" = false ]; then
+        notify "Joplin is not installed" "warning"
+        return 1
+    fi
+
+    notify "Uninstalling Joplin..." "heading"
+
+    confirm_action "This will uninstall Joplin." || return
+
+    # Remove each item silently
+    for item in "${items_to_remove[@]}"; do
+        rm -rf $item 2>/dev/null
+    done
+
     # Update desktop database
     update-desktop-database ~/.local/share/applications/ 2>/dev/null
-    
+
     notify "Joplin successfully uninstalled!" "success"
 }
 
