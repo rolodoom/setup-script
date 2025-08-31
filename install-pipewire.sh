@@ -11,7 +11,7 @@ notify "Installing pipewire" "heading"
 # Pipewire
 # https://wiki.debian.org/PipeWire
 # ---------------------------
-sudo apt install pipewire-alsa pipewire-audio pipewire-audio-client-libraries pipewire-jack libspa-0.2-jack -y
+sudo apt install pipewire-audio pipewire-jack libspa-0.2-jack -y
 
 notify "Tell all apps that use JACK to now use the Pipewire JACK"
 # Tell all apps that use JACK to now use the Pipewire JACK
