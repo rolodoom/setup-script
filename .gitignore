@@ -1,6 +1,38 @@
+# Archives / packages
 *.deb
+*.rpm
 *.zip
+*.7z
 *.tar.bz2
-*.AppImage
 *.tar.xz
 *.tar.gz
+*.AppImage
+
+# Editor swap/backup
+*~
+*.swp
+*.swo
+*.kate-swp
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# Binaries / compiled stuff
+a.out
+*.out
+*.o
+*.so
+*.bin
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets (optional, only if needed)
+.env
+*.secret
+*.key
+*.pem
