@@ -26,7 +26,7 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-reaper.sh 7.41
 ./install-winehq-debian.sh -i --downgrade
 ./install-yabridge.sh
-./install-zotero.sh
+# ./install-zotero.sh -i 7.0.21
 
 notify "Configure System for Audio Workstation"
 notify "grub ..."
@@ -45,11 +45,11 @@ fs.inotify.max_user_watches=600000' | sudo tee /etc/sysctl.d/99-custom.conf
 sudo sysctl --system
 
 notify "Installing Default Software..."
-sudo apt install -y calibre dolphin-plugins dolphin-nextcloud gimp hunspell-es inkscape kcolorchooser keepassxc kwin-addons kio-extras papirus-icon-theme polyphone tidy thunderbird
+sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras kbibtex keepassxc kwin-addons papirus-icon-theme polyphone tidy thunderbird
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
-sudo apt install -y ardour audacity soundconverter dragonfly-reverb lsp-plugins calf-plugins caps dpf-plugins tap-plugins zam-plugins eq10q ebumeter x42-plugins
+sudo apt install -y ardour audacity ebumeter eq10q calf-plugins caps dpf-plugins dragonfly-reverb lsp-plugins soundconverter tap-plugins x42-plugins zam-plugins
 
 ./install-musescore4.sh -a
 
