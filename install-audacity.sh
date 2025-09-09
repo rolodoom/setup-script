@@ -33,6 +33,13 @@ install() {
         help
     fi
 
+    # Si hay versiones previas, eliminarlas
+    EXISTING=$(ls "$INSTALL_DIR"/audacity-linux-*-x64-22.04.AppImage 2>/dev/null)
+    if [ -n "$EXISTING" ]; then
+        notify "Previous Audacity version found. Removing..."
+        uninstall
+    fi
+
     URL="https://github.com/audacity/audacity/releases/download/Audacity-$VERSION/audacity-linux-$VERSION-x64-22.04.AppImage"
     FILENAME="audacity-linux-$VERSION-x64-22.04.AppImage"
     
@@ -71,6 +78,8 @@ EOF
     notify "Audacity $VERSION installed successfully!" "success"
 }
 
+
+
 uninstall() {
     # Check if any AppImage exists
     APPIMAGE=$(ls "$INSTALL_DIR"/audacity-linux-*-x64-22.04.AppImage 2>/dev/null)
@@ -92,28 +101,6 @@ uninstall() {
     fi
 
     notify "Audacity uninstalled successfully." "success"
-}
-
-
-
-upgrade() {
-    VERSION="$1"
-    if [ -z "$VERSION" ]; then
-        notify "You must specify a version to upgrade to." "error"
-        help
-    fi
-
-    echo "Upgrading Audacity to version $VERSION..."
-
-    # Check if AppImage exists
-    APPIMAGE=$(ls "$INSTALL_DIR"/audacity-linux-*-x64-22.04.AppImage 2>/dev/null)
-    if [ -z "$APPIMAGE" ]; then
-        echo "No existing installation found. Installing version $VERSION..."
-    else
-        uninstall
-    fi
-
-    install "$VERSION"
 }
 
 
