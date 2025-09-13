@@ -17,7 +17,7 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-asciiquarium.sh
 ./install-brave.sh
 ./install-docker-debian.sh
-./install-firefox.sh
+#./install-firefox.sh
 ./install-flatpak.sh
 # ./install-joplin.sh -i
 ./install-liquorix.sh
