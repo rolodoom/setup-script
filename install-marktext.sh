@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # --- External Functions ---
-source lib/notify_lib.sh
+source lib/notify_lib.sh 2>/dev/null || true
+source lib/check_libfuse.sh 2>/dev/null || true
 
 # --- Variables ---
 INSTALL_DIR="$HOME/.local/bin"
@@ -32,6 +33,10 @@ install() {
         notify "You must specify a version to install." "error"
         help
     fi
+
+    notify "Installing MarkText ${VERSION}" "heading"
+
+    check_libfuse || return 1
 
     # Si hay versiones previas, eliminarlas
     EXISTING=$(ls "$INSTALL_DIR"/marktext-*-x86_64.AppImage 2>/dev/null)
