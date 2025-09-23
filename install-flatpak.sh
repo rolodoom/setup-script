@@ -78,7 +78,9 @@ remove_flatpak_apps() {
 
     notify "Removing Flatpak applications installed by this script"
     for app in "${FLATHUB_APPS[@]}"; do
-        sudo flatpak uninstall -y "$app"
+        if flatpak list --app | grep -q "^$app"; then
+            sudo flatpak uninstall -y "$app"
+        fi
     done
 
     read -p "Do you want to remove unused Flatpak runtimes and dependencies? [y/N]: " response
