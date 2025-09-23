@@ -63,7 +63,6 @@ check_flatpak_ready() {
 }
 
 install_flatpak_apps() {
-    # Comprobar si Flatpak y Flathub están listos
     if ! check_flatpak_ready; then
         return 1
     fi
@@ -73,7 +72,6 @@ install_flatpak_apps() {
 }
 
 remove_flatpak_apps() {
-    # Comprobar si Flatpak y Flathub están listos
     if ! check_flatpak_ready; then
         return 1
     fi
@@ -82,7 +80,19 @@ remove_flatpak_apps() {
     for app in "${FLATHUB_APPS[@]}"; do
         sudo flatpak uninstall -y "$app"
     done
+
+    read -p "Do you want to remove unused Flatpak runtimes and dependencies? [y/N]: " response
+    case "$response" in
+        [Yy]* )
+            notify "Removing unused Flatpak runtimes and dependencies"
+            sudo flatpak uninstall --unused -y
+            ;;
+        * )
+            notify "Skipped removing unused Flatpak runtimes"
+            ;;
+    esac
 }
+
 
 show_help() {
     echo "Usage: $0 [OPTION]"
