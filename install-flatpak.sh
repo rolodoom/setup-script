@@ -50,7 +50,7 @@ add_flathub() {
 
 check_flatpak_ready() {
     if ! command -v flatpak &>/dev/null; then
-        notify "Flatpak no está instalado. Operación abortada."
+        notify "Flatpak is not installed. Operation aborted."
         return 1
     fi
 
