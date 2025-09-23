@@ -23,7 +23,7 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-liquorix.sh
 ./install-neovim.sh -a
 ./install-pipewire.sh
-./install-reaper.sh 7.41
+./install-reaper.sh 7.46
 ./install-winehq-debian.sh -i --downgrade
 ./install-yabridge.sh
 # ./install-zotero.sh -i 7.0.21

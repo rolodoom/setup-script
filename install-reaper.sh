@@ -13,10 +13,10 @@ if [ -z "$1" ] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
   echo
   echo "Arguments:"
   echo "  <REAPER_VERSION>  The version of REAPER to install, with or without a period."
-  echo "                    Example: 729 or 7.29 (both are accepted)."
+  echo "                    Example: 746 or 7.46 (both are accepted)."
   echo
   echo "Example:"
-  echo "  $0 729"
+  echo "  $0 746"
   echo "  This will download and install REAPER version 7.x."
   echo
   exit 0
