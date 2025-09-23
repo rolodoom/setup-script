@@ -84,18 +84,27 @@ uninstall_ms_studio() {
   # Remove desktop file
   local desktop_file="${HOME}/.local/share/applications/org.musescore.MuseScore4portable.desktop"
   [ -f "${desktop_file}" ] && rm -f "${desktop_file}"
-  
-  # Remove icon files
+
+   # Remove icon files
   local icon_dir="${HOME}/.local/share/icons/hicolor"
   if [ -d "${icon_dir}" ]; then
     # Remove mscore4portable.png in all resolution folders
     find "${icon_dir}" -type f -name "mscore4portable.png" -delete
-    
-    # Remove SVG mime type icons
-    local mime_dir="${icon_dir}/scalable/mimetypes"
-    [ -f "${mime_dir}/application-x-musescore4portable.svg" ] && rm -f "${mime_dir}/application-x-musescore4portable.svg"
-    [ -f "${mime_dir}/application-x-musescore4portable+xml.svg" ] && rm -f "${mime_dir}/application-x-musescore4portable+xml.svg"
+
+    # Remove all MuseScore-related mime type icons (svg, png, any size)
+    find "${icon_dir}" -type f -path "*/mimetypes/*" -name "*musescore4portable*" -delete
   fi
+
+   # Remove MIME files related to MuseScore
+  local mime_base="${HOME}/.local/share/mime"
+  for dir in application x-scheme-handler packages; do
+    if [ -d "${mime_base}/${dir}" ]; then
+      find "${mime_base}/${dir}" -type f -iname "*musescore*" -delete
+    fi
+  done
+
+  # Update MIME database
+  update-mime-database "${mime_base}" >/dev/null 2>&1
   
   notify "MuseScore Studio ${MSS_VERSION} completely removed" "success"
 }
