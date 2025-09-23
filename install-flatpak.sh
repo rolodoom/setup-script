@@ -55,7 +55,7 @@ check_flatpak_ready() {
     fi
 
     if ! flatpak remotes | grep -q '^flathub'; then
-        notify "El repositorio Flathub no existe. Operación abortada."
+        notify "The Flathub repository does not exist. Operation aborted."
         return 1
     fi
 
