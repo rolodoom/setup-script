@@ -13,6 +13,7 @@ MSS_VERSION=$(echo "$MSS_FILENAME" | grep -oP 'MuseScore-Studio-\K\d+\.\d+\.\d+'
 
 # --- External Functions ---
 source lib/notify_lib.sh
+source lib/check_libfuse.sh
 
 # --- Functions ---
 
@@ -43,6 +44,8 @@ confirm_action() {
 
 install_ms_studio() {
   notify "Installing MuseScore Studio ${MSS_VERSION}" "heading"
+
+  check_libfuse || return 1
   
   if [[ -f "${MSS_FILENAME}" ]]; then
     echo "Found existing: ${MSS_FILENAME}"
