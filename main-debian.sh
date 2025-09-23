@@ -49,9 +49,10 @@ sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es i
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
-sudo apt install -y ardour audacity ebumeter eq10q calf-plugins caps dpf-plugins dragonfly-reverb lsp-plugins soundconverter tap-plugins x42-plugins zam-plugins
+sudo apt install -y ardour ebumeter eq10q calf-plugins caps dpf-plugins dragonfly-reverb lsp-plugins soundconverter tap-plugins x42-plugins zam-plugins
 
 ./install-musescore4.sh -a
+./install-audacity.sh -i 3.7.5
 
 notify "Update user preferences..."
 sudo usermod -aG docker $USER
