@@ -20,7 +20,7 @@ sudo apt install -y wget curl htop btop git rsync zsh
 #./install-firefox.sh
 ./install-flatpak.sh
 # ./install-joplin.sh -i
-./install-liquorix.sh
+# ./install-liquorix.sh
 ./install-neovim.sh -a
 ./install-pipewire.sh
 ./install-reaper.sh 7.46
