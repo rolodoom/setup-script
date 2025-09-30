@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- User Provided URLs ---
-MSS_URL="https://github.com/musescore/MuseScore/releases/download/v4.5.2/MuseScore-Studio-4.5.2.251141401-x86_64.AppImage"
+MSS_URL="https://github.com/musescore/MuseScore/releases/download/v4.6.0/MuseScore-Studio-4.6.0.252730944-x86_64.AppImage"
 MSM_URL="https://muse-cdn.com/Muse_Sounds_Manager_x64.deb"
 
 # --- Derived Variables ---
