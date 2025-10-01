@@ -43,10 +43,26 @@ confirm_action() {
 }
 
 install_ms_studio() {
+  check_libfuse || return 1
+
+  local installed_file
+  installed_file=$(ls -1 ~/.local/bin/MuseScore-Studio-*.AppImage 2>/dev/null | head -n1)
+
+  if [[ -n "$installed_file" ]]; then
+    local installed_version
+    installed_version=$(basename "$installed_file" | grep -oP 'MuseScore-Studio-\K\d+\.\d+\.\d+')
+
+    if [[ "$installed_version" == "$MSS_VERSION" ]]; then
+      notify "MuseScore Studio ${MSS_VERSION} is already installed. Skipping." "success"
+      return 0
+    else
+      notify "Different version (${installed_version}) detected. Replacing with ${MSS_VERSION}." "warning"
+      uninstall_ms_studio
+    fi
+  fi
+
   notify "Installing MuseScore Studio ${MSS_VERSION}" "heading"
 
-  check_libfuse || return 1
-  
   if [[ -f "${MSS_FILENAME}" ]]; then
     echo "Found existing: ${MSS_FILENAME}"
   else
@@ -56,7 +72,7 @@ install_ms_studio() {
   chmod +x "${MSS_FILENAME}"
   "./${MSS_FILENAME}" install || notify "Installation failed" "error"
 
-  notify "Installing MuseScore Studio ${MSS_VERSION} installed succesfully" "success"
+  notify "MuseScore Studio ${MSS_VERSION} installed successfully" "success"
 }
 
 install_ms_sounds() {
@@ -75,30 +91,26 @@ install_ms_sounds() {
 }
 
 uninstall_ms_studio() {
-  confirm_action "This will uninstall MuseScore Studio ${MSS_VERSION}." || return
+  confirm_action "This will uninstall MuseScore Studio." || return
   
   notify "Uninstalling MuseScore Studio" "heading"
   
-  # Remove AppImage and symlinks
-  local install_path="${HOME}/.local/bin/${MSS_FILENAME}"
-  [ -f "${install_path}" ] && rm -f "${install_path}"
+  # Remove any AppImage and symlinks
+  rm -f ~/.local/bin/MuseScore-Studio-*.AppImage
   rm -f ~/.local/bin/{mscore4portable,musescore4portable}
   
   # Remove desktop file
   local desktop_file="${HOME}/.local/share/applications/org.musescore.MuseScore4portable.desktop"
   [ -f "${desktop_file}" ] && rm -f "${desktop_file}"
 
-   # Remove icon files
+  # Remove icon files
   local icon_dir="${HOME}/.local/share/icons/hicolor"
   if [ -d "${icon_dir}" ]; then
-    # Remove mscore4portable.png in all resolution folders
     find "${icon_dir}" -type f -name "mscore4portable.png" -delete
-
-    # Remove all MuseScore-related mime type icons (svg, png, any size)
     find "${icon_dir}" -type f -path "*/mimetypes/*" -name "*musescore4portable*" -delete
   fi
 
-   # Remove MIME files related to MuseScore
+  # Remove MIME files related to MuseScore
   local mime_base="${HOME}/.local/share/mime"
   for dir in application x-scheme-handler packages; do
     if [ -d "${mime_base}/${dir}" ]; then
@@ -106,10 +118,9 @@ uninstall_ms_studio() {
     fi
   done
 
-  # Update MIME database
   update-mime-database "${mime_base}" >/dev/null 2>&1
   
-  notify "MuseScore Studio ${MSS_VERSION} completely removed" "success"
+  notify "MuseScore Studio completely removed" "success"
 }
 
 uninstall_ms_sounds() {
