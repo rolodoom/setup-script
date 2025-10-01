@@ -15,6 +15,7 @@ FLATHUB_APPS=(
     org.libretro.RetroArch
     org.nickvision.tubeconverter
     org.torproject.torbrowser-launcher
+    net.hovancik.Stretchly
 )
 
 # --- Functions ---
