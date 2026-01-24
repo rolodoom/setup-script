@@ -22,6 +22,7 @@ notify() {
     #               "success" - Green success message with checkmark
     #               "info"    - Informational message (blue, with "INFO:" prefix)
     #               "error"   - Error message (red, with "ERROR:" prefix)
+    #               "warning" - Error message (orange, with "WARNING:" prefix)
     #
     # Examples:
     #   notify "Task completed"                   # Default oneline format
