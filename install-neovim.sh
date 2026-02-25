@@ -45,16 +45,30 @@ install_nvim() {
     # Download release
     if ! wget "$NVIM_URL" -O "$NVIM_TAR_FILE"; then
         notify "Failed to download NeoVim" "error"
+        return 1
     fi
 
     # Extract archive
     if ! tar xzf "$NVIM_TAR_FILE"; then
         notify "Failed to extract archive" "error"
+        return 1
     fi
 
+    # Remove previous install (if exists)
+    sudo rm -rf "$NVIM_INSTALL_PATH"
+
     # Install to system
-    sudo mv "$NVIM_DIR" "$NVIM_INSTALL_PATH" || notify "Installation failed" "error"
-    sudo ln -sf "$NVIM_INSTALL_PATH/bin/nvim" "$NVIM_BIN_PATH" || notify "Could not create symlink" "error"
+    if ! sudo mv "$NVIM_DIR" "$NVIM_INSTALL_PATH"; then
+        notify "Installation failed" "error"
+        return 1
+    fi
+
+    # Recreate symlink cleanly
+    sudo rm -f "$NVIM_BIN_PATH"
+    if ! sudo ln -s "$NVIM_INSTALL_PATH/bin/nvim" "$NVIM_BIN_PATH"; then
+        notify "Could not create symlink" "error"
+        return 1
+    fi
 
     # Cleanup
     rm -f "$NVIM_TAR_FILE"
@@ -65,6 +79,7 @@ install_nvim() {
         return 0
     else
         notify "NeoVim installation verification failed" "error"
+        return 1
     fi
 }
 
