@@ -6,16 +6,20 @@ source lib/notify_lib.sh
 # --- Constants ---
 FLATHUB_APPS=(
     studio.kx.carla
-    com.github.tchx84.Flatseal
-    com.sigil_ebook.Sigil
-    com.spotify.Client
-    io.github.giantpinkrobots.flatsweep
-    org.audiveris.audiveris
-    org.gnome.gitlab.dqpb.GMetronome
-    org.libretro.RetroArch
-    org.nickvision.tubeconverter
     org.torproject.torbrowser-launcher
-    net.hovancik.Stretchly
+    org.pipewire.Helvum
+    org.nickvision.tubeconverter
+    org.kde.kdenlive
+    org.gnome.gitlab.dqpb.GMetronome
+    org.gnome.SimpleScan
+    io.github.hrkfdn.ncspot
+    io.github.giantpinkrobots.flatsweep
+    fr.handbrake.ghb
+    com.spotify.Client
+    com.sigil_ebook.Sigil
+    com.polyphone_soundfonts.polyphone
+    com.github.tchx84.Flatseal
+    com.github.johnfactotum.Foliate
 )
 
 # --- Functions ---
