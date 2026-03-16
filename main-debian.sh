@@ -15,18 +15,14 @@ notify "Installing requirements..."
 sudo apt install -y wget curl htop btop git rsync zsh
 
 ./install-asciiquarium.sh
-./install-brave.sh
 ./install-docker-debian.sh
-#./install-firefox.sh
-./install-flatpak.sh
-# ./install-joplin.sh -i
-# ./install-liquorix.sh
+./install-firefox.sh
+./install-flatpak.sh -i
 ./install-neovim.sh -a
 ./install-pipewire.sh
 ./install-reaper.sh 7.46
 ./install-winehq-debian.sh -i --downgrade
 ./install-yabridge.sh
-# ./install-zotero.sh -i 7.0.21
 
 notify "Configure System for Audio Workstation"
 notify "grub ..."
@@ -45,7 +41,7 @@ fs.inotify.max_user_watches=600000' | sudo tee /etc/sysctl.d/99-custom.conf
 sudo sysctl --system
 
 notify "Installing Default Software..."
-sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras kbibtex keepassxc kwin-addons papirus-icon-theme polyphone tidy thunderbird
+sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras kbibtex keepassxc kwin-addons papirus-icon-theme tidy thunderbird
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
@@ -61,4 +57,3 @@ sudo usermod -aG audio $USER
 echo ""
 notify "FINISHED! PLEASE REBOOT SYSTEM" "success"
 echo ""
-
