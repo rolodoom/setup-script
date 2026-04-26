@@ -15,19 +15,19 @@ DATA_DIR="$HOME/.zotero"
 install() {
     notify "Installing Zotero $VERSION" "heading"
 
-    INSTALLER="Zotero-${VERSION}_linux-x86_64.tar.bz2"
+    INSTALLER="Zotero-${VERSION}_linux-x86_64.tar.xz"
     notify "Downloading Zotero..."
     wget -O ${INSTALLER} "https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version=${VERSION}"
 
-    # Check dependency
-    if ! dpkg -l | grep -q "libdbus-glib-1-2"; then
-        notify "libdbus-glib-1-2 not found, installing..."
+    # Check dependencies
+    if ! dpkg -l | grep -q "libdbus-glib-1-2" || ! dpkg -l | grep -q "libreoffice-java-common"; then
+        notify "Installing missing dependencies..."
         sudo apt update
-        sudo apt install -y libdbus-glib-1-2
+        sudo apt install -y libdbus-glib-1-2 libreoffice-java-common
     fi
 
     notify "Extracting Zotero..."
-    sudo tar -xjf ${INSTALLER} --transform='s/Zotero_linux-x86_64/zotero/' -C /opt
+    sudo tar -xf ${INSTALLER} --transform='s/Zotero_linux-x86_64/zotero/' -C /opt
     sudo /opt/zotero/set_launcher_icon
 
     ln -sf ${INSTALL_DIR}/zotero.desktop ${DESKTOP_LAUNCHER}
