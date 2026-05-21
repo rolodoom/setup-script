@@ -6,7 +6,12 @@ source lib/notify_lib.sh
 # --- Configuration ---
 DOWNGRADE_VERSION="9.0.0.0"
 DOWNGRADE_VERSION_SHORT="9.0"
-LATEST_VERSION_SHORT="10.0"
+LATEST_VERSION_SHORT=$(
+    LANG=C apt-cache policy winehq-stable |
+    awk '/Candidate:/ {print $2}' |
+    cut -d'~' -f1 |
+    cut -d'.' -f1,2
+)
 SCRIPT_NAME=$(basename "$0")
 DEBIAN_CODENAME=$(grep -Po '(?<=VERSION_CODENAME=)\w+' /etc/os-release)
 
@@ -147,7 +152,7 @@ uninstall_wine_and_repos() {
 show_help() {
     echo "Usage:"
     echo "  Installation:"
-    echo "    $SCRIPT_NAME -i --latest       Install latest WineHQ stable"
+    echo "    $SCRIPT_NAME -i --latest       Install latest WineHQ stable $LATEST_VERSION_SHORT"
     echo "    $SCRIPT_NAME -i --downgrade    Install WineHQ stable $DOWNGRADE_VERSION"
     echo "  Uninstallation:"
     echo "    $SCRIPT_NAME -u               Uninstall WineHQ (keep repos)"
