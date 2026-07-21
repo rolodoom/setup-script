@@ -40,6 +40,11 @@ echo 'vm.swappiness=10
 fs.inotify.max_user_watches=600000' | sudo tee /etc/sysctl.d/99-custom.conf
 sudo sysctl --system
 
+notify "CPU DMA Latency..."
+echo 'KERNEL=="cpu_dma_latency", GROUP="audio", MODE="0660"' | sudo tee -a /etc/udev/rules.d/99-cpu-dma-latency.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
 notify "Installing Default Software..."
 sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras keepassxc kwin-addons papirus-icon-theme tidy thunderbird
 ./cleanup-hunspell-es.sh
