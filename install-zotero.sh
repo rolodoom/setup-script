@@ -55,7 +55,7 @@ help() {
     echo "Usage: $0 [OPTION] [VERSION]"
     echo
     echo "Options:"
-    echo "  -i VERSION   Install Zotero (version required, format X.X.XX, e.g., 7.0.21)"
+    echo "  -i VERSION   Install Zotero (X.X or X.X.X)"
     echo "  -u           Uninstall Zotero"
     echo "  -h           Show this help message"
 }
@@ -74,12 +74,12 @@ main() {
         -i)
             VERSION="$2"
             if [ -z "$VERSION" ]; then
-                notify "Error: You must specify a version after -i. Example: $0 -i 7.0.21" "error"
+                notify "Error: You must specify a version after -i. Example: $0 -i X.X[.X]" "error"
                 exit 1
             fi
-            # Validate version format X.X.XX (last number max 2 digits)
-            if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]{1,2}$ ]]; then
-                notify "Error: Version format invalid. Must be X.X.XX, e.g., 7.0.21" "error"
+            # Validate version format X.X or X.X.X
+            if [[ ! "$VERSION" =~ ^[0-9]+(\.[0-9]+){1,2}$ ]]; then
+                notify "error" "Versión inválida: $VERSION"
                 exit 1
             fi
             ACTION="install"
