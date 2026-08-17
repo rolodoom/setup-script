@@ -20,8 +20,8 @@ sudo apt install -y wget curl htop btop git rsync zsh
 ./install-flatpak.sh -i
 ./install-neovim.sh -a
 ./install-pipewire.sh
-./install-reaper.sh 7.46
-./install-winehq-debian.sh -i --downgrade
+./install-reaper.sh 7.79
+./install-winehq-debian.sh -i --latest
 ./install-yabridge.sh
 
 notify "Configure System for Audio Workstation"
