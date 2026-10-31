@@ -16,13 +16,14 @@ sudo apt install -y wget curl htop btop git rsync zsh
 
 ./install-asciiquarium.sh
 ./install-docker-debian.sh
-./install-firefox.sh
+./install-firefox.sh -i
+./install-brave.sh
 ./install-flatpak.sh -i
 ./install-neovim.sh -a
 ./install-pipewire.sh
-./install-reaper.sh 7.79
+./install-reaper.sh 7.80
 ./install-winehq-debian.sh -i --latest
-./install-yabridge.sh
+./install-yabridge.sh -i
 
 notify "Configure System for Audio Workstation"
 notify "grub ..."
@@ -46,7 +47,7 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 
 notify "Installing Default Software..."
-sudo apt install -y calibre dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras keepassxc kwin-addons papirus-icon-theme tidy thunderbird
+sudo apt install -y dolphin-nextcloud dolphin-plugins gimp hunspell-es inkscape kcolorchooser kio-extras keepassxc kwin-addons papirus-icon-theme tidy
 ./cleanup-hunspell-es.sh
 
 notify "Installing Default Audio Software..."
